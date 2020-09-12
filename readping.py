@@ -5,8 +5,12 @@
 # ping. I can run this command with stdin piped in from a `ping google.com` command
 # for example
 #
+# Holds a buffer of the last ping so in case things go over HIGH_MULTIPLE
+# the previous value prints. 10 pings return to show the trajectory. Another
+# 10 will fire if the pings are still higher
 #
-
+#
+#
 import sys
 import re
 from time import localtime, gmtime, strftime
