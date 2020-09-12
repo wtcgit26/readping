@@ -15,7 +15,8 @@ import sys
 import re
 from time import localtime, gmtime, strftime
 
-iterations = 0
+# this lines things up with the icmp_seq (todo - I should update to actually use the icmp_seq instead of an iterative)
+iterations = -2
 cumsum = 0
 alert_num = 0
 HIGH_MULTIPLE = 3
@@ -46,6 +47,10 @@ for line in sys.stdin:
 			alert_buffer = alert
 		if iterations % 1000 == 0 or iterations == 10 or iterations == 100 or iterations == 500:
 			print ("{} pings run".format(iterations))
+	else:
+		other_msg = re.search(r".*", line)
+		if other_msg:
+			print(other_msg.group(0))
 
 
 
