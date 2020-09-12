@@ -17,7 +17,9 @@ from time import localtime, gmtime, strftime
 
 # this lines things up with the icmp_seq (todo - I should update to actually use the icmp_seq instead of an iterative)
 iterations = -2
-cumsum = 0
+pingtime = 0.0
+cumsum = 0.0
+average = 0.0
 alert_num = 0
 HIGH_MULTIPLE = 3
 alert_buffer = ""
@@ -28,9 +30,10 @@ for line in sys.stdin:
 	result = re.search(r"time\=[0-9]*\.[0-9]*", line)
 	if result:
 		x = result.group(0).split("=")
-		pingtime = float(x[1])
-		cumsum += pingtime
-		average = cumsum / iterations
+		if (iterations > 0):
+			pingtime = float(x[1])
+			cumsum += pingtime
+			average = cumsum / iterations
 		currtime = strftime("%a, %d %b %Y %H:%M:%S", localtime())
 		alert = "Alert @ {} pings run -- {:8.2f} -- {:6.1f} average -- {}".format(iterations, pingtime, average, currtime)
 		if pingtime > HIGH_MULTIPLE * average:
@@ -45,7 +48,7 @@ for line in sys.stdin:
 		else:
 			alert_num = 0
 			alert_buffer = alert
-		if iterations % 1000 == 0 or iterations == 10 or iterations == 100 or iterations == 500:
+		if iterations % 1000 == 0 or iterations == 10 or iterations == 100 or iterations == 500 and iterations > 0:
 			print ("{} pings run".format(iterations))
 	else:
 		other_msg = re.search(r".*", line)
