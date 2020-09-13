@@ -34,8 +34,8 @@ for line in sys.stdin:
 			pingtime = float(x[1])
 			cumsum += pingtime
 			average = cumsum / iterations
-		currtime = strftime("%a, %d %b %Y %H:%M:%S", localtime())
-		alert = "Alert @ {} pings run -- {:6.1f} ms -- {:6.1f} ms average -- {}".format(iterations, pingtime, average, currtime)
+		currtime = strftime("%d %b %Y %H:%M:%S", localtime())
+		alert = "Alert {} pings run - {:6.1f} ms - {:6.1f} ms average - {}".format(iterations, pingtime, average, currtime)
 		if pingtime > HIGH_MULTIPLE * average:
 			alert_num += 1
 			if(alert_num == 1):
@@ -49,7 +49,7 @@ for line in sys.stdin:
 			alert_num = 0
 			alert_buffer = alert
 		if iterations % 1000 == 0 or iterations == 10 or iterations == 100 or iterations == 500 and iterations > 0:
-			print ("{} pings run -- {:6.1f} ms average".format(iterations, average))
+			print ("{} pings run - {:6.1f} ms average".format(iterations, average))
 	else:
 		other_msg = re.search(r".*", line)
 		if other_msg:
