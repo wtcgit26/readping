@@ -54,6 +54,7 @@ for line in sys.stdin:
 			alert_num = 0
 			alert_buffer = alert
 			if alert_active:
+				print("")
 				print("======================= {} Alerts =======================".format(alert_total))
 				print("")
 				alert_active = False
