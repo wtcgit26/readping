@@ -22,7 +22,8 @@ cumsum = 0.0
 average = 0.0
 alert_num = 0
 alert_total = 0
-HIGH_MULTIPLE = 3	
+alert_active = False
+HIGH_MULTIPLE = 5
 alert_buffer = ""
 
 for line in sys.stdin:
@@ -41,17 +42,27 @@ for line in sys.stdin:
 			alert_num += 1
 			alert_total += 1
 			if(alert_num == 1):
-				print("======================= {} Alerts =======================".format(alert_total))
+				print("=========================================================")
 				print(alert_buffer)
 			print(alert)
+			alert_active = True
 		elif alert_num < 10 and alert_num != 0:
 			print(alert)
 			alert_num += 1
+			alert_active = True
 		else:
 			alert_num = 0
 			alert_buffer = alert
+			if alert_active:
+				print("======================= {} Alerts =======================".format(alert_total))
+				print("")
+				alert_active = False
 		if iterations % 1000 == 0 or iterations == 10 or iterations == 100 or iterations == 500 and iterations > 0:
+			print("")
+			print("=========================================================")
 			print ("{} pings run - {:6.1f} ms average - {} alerts".format(iterations, average, alert_total))
+			print("=========================================================")
+			print("")
 	else:
 		other_msg = re.search(r".*", line)
 		if other_msg:
