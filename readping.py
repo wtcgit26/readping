@@ -21,6 +21,7 @@ pingtime = 0.0
 cumsum = 0.0
 average = 0.0
 alert_num = 0
+alert_total = 0
 HIGH_MULTIPLE = 3	
 alert_buffer = ""
 
@@ -38,8 +39,9 @@ for line in sys.stdin:
 		alert = "Alert {} pings run - {:6.1f} ms - {:6.1f} ms average - {}".format(iterations, pingtime, average, currtime)
 		if pingtime > HIGH_MULTIPLE * average:
 			alert_num += 1
+			alert_total += 1
 			if(alert_num == 1):
-				print("===================================")
+				print("======================= {} Alerts =======================".format(alert_total))
 				print(alert_buffer)
 			print(alert)
 		elif alert_num < 10 and alert_num != 0:
@@ -49,7 +51,7 @@ for line in sys.stdin:
 			alert_num = 0
 			alert_buffer = alert
 		if iterations % 1000 == 0 or iterations == 10 or iterations == 100 or iterations == 500 and iterations > 0:
-			print ("{} pings run - {:6.1f} ms average".format(iterations, average))
+			print ("{} pings run - {:6.1f} ms average - {} alerts".format(iterations, average, alert_total))
 	else:
 		other_msg = re.search(r".*", line)
 		if other_msg:
