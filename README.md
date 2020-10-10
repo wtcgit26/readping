@@ -2,7 +2,9 @@
 
 I developed this tool to troubleshoot a nagging problem that I was having with my Apple MacBook Pro 2017, currently running macOS Mojave 10.14.6. I was having regular ping related fails on video conferencing. Using this tool I was able to track it to consistently every 5 minutes, nearly to the second. I wasn't sure if it was just me or not until I was watching a webinar including Sir Jeremy Farrar -- mentioned in [this tweet](https://twitter.com/JeremyFarrar/status/1315034276874813446?s=20) and noticed that he was glitching every 5 minutes. After notifying his team that he should try a reboot, it worked. And on the next conference there was only a minor skip every five minutes, which is expected as indicated below.
 
-My end conclusion is that this is an Apple problem.
+Note: The problem does not appear to occur on a wired connection. I did try to reduce the HIGH_MULTIPLE variable to 1.5 to see if there was a smaller blip going on with a wired connection, but could not find a consistent pattern.
+
+My end conclusion is that this is an Apple problem. 
 
 ## Overview
 
@@ -13,6 +15,8 @@ Total number of ping alerts are announced at 10, 100, 500, and every 1000 pings.
 ### Observations
 
 While pinging to google.com (or any other address for that matter) I will consistently see a small blip with an increased ping time every 5 minutes. After days of not rebooting my computer, this blip will become larger, eventually rising to multiple hundreds and eventually thousands of milliseconds, causing seriously problems on a video conference. After rebooting the machine, it goes back down to blip in line with the example given here.
+
+Samples taken with `HIGH_MULTIPLE = 4`
 
 google.com ping
 
